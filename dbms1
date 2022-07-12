@@ -1,0 +1,133 @@
+create table branch(Branch_id char(10) primary key, 
+     Branch_name varchar(20),
+     Hod varchar(20) );
+     
+     
+create table student(Usn char(10) primary key,
+     Name varchar(20) ,
+     Address varchar(50),
+     Branch_id char(10),
+     Sem int(3) ,
+ foreign key (Branch_id) references branch (Branch_id));
+ 
+create table author(Author_id int(10) primary key,
+    Author_name varchar(20), 
+    Country varchar(20),
+    Age int(10));  
+    
+create table book(Book_id char(10) primary key,
+   Book_name varchar(20),
+   Author_id int(10), 
+   Publisher varchar(20),
+   Branch_id char(10),
+   foreign key(Branch_id) references branch (Branch_id),
+   foreign key (Author_id) references author(Author_id));  
+   
+create table borrow(Usn char(10), 
+     Book_id char(10),
+     Borrow_date date,
+     primary key(Usn,Book_id),
+     foreign key (Usn) references student(Usn),
+     foreign key(Book_id) references book(Book_id));
+     
+      show tables;
++-----------------------------+
+| Tables_in_VP21MC003_collage |
++-----------------------------+
+| author                      |
+| book                        |
+| borrow                      |
+| branch                      |
+| student                     |
++-----------------------------+
+
+     
+     
+     insert into branch values("B1","MCA","dr.Vandana");
+     insert into branch values("B2","MBA","dr.Ayyar");
+     insert into branch values("B3","civil","Deepthi");
+     insert into branch values("B4","MEC","Dhanya");
+     insert into branch values("B5","CS","Kavya");
+     
+     
+     mysql> select * from branch
+    -> ;
++-----------+-------------+------------+
+| Branch_id | Branch_name | Hod        |
++-----------+-------------+------------+
+| B1        | MCA         | dr.Vandana |
+| B2        | MBA         | dr.Ayyar   |
+| B3        | civil       | Deepthi    |
+| B4        | MEC         | Dhanya     |
+| B5        | CS          | Kavya      |
++-----------+-------------+------------+
+
+insert into student values("4VP21MC003","Anagha","Puttur","B1","2");
+insert into student values("4VP21MB010","Depthi","Puttur","B2","2");
+insert into student values("4VP21ci010","Dhanya","Puttur","B3","2");
+insert into student values("4VP21ME010","Kavya","Puttur","B4","2");
+insert into student values("4VP21CS000","Gouri","Puttur","B5","2");
+
+mysql> select * from student;
++------------+--------+---------+-----------+------+
+| Usn        | Name   | Address | Branch_id | Sem  |
++------------+--------+---------+-----------+------+
+| 4VP21ci010 | Dhanya | Puttur  | B3        |    2 |
+| 4VP21MB010 | Depthi | Puttur  | B2        |    2 |
+| 4VP21MC003 | Anagha | Puttur  | B1        |    2 |
+| 4VP21ME000 | Gouri  | Puttur  | B5        |    2 |
+| 4VP21ME010 | Kavya  | Puttur  | B4        |    2 |
++------------+--------+---------+-----------+------+
+
+insert into author values("1","RAMEZ ELMASARI","Arlirhton","52");
+insert into author values("2","Baidanath Mishra","India","51");
+insert into author values("3","Ellis Horowitz","US","40");
+insert into author values("4","Deepak Kehawani","India","40");
+insert into author values("5","Yrus","Japan","44");
+
+mysql> select * from author;
++-----------+------------------+-----------+------+
+| Author_id | Author_name      | Country   | Age  |
++-----------+------------------+-----------+------+
+|         1 | RAMEZ ELMASARI   | Arlirhton |   52 |
+|         2 | Baidanath Mishra | India     |   51 |
+|         3 | Ellis Horowitz   | US        |   40 |
+|         4 | Deepak Kehawani  | India     |   40 |
+|         5 | Yrus             | Japan     |   44 |
++-----------+------------------+-----------+------+
+
+insert into book  values("BK1","DBMS","1","Pearson","b1"); 
+insert into book  values("BK2","Research Methodology","2","Pearson","b2");
+insert into book  values("BK3","Data structure","3","Taylor","b3");
+insert into book  values("BK4","AI","4","MC GREW HILL","b3");
+insert into book  values("BK5","Thermo Dynamics","5","MC GREW HILL","b4");
+
+mysql> select * from book;
++---------+----------------------+-----------+--------------+-----------+
+| Book_id | Book_name            | Author_id | Publisher    | Branch_id |
++---------+----------------------+-----------+--------------+-----------+
+| BK1     | DBMS                 |         1 | Pearson      | b1        |
+| BK2     | Research Methodology |         2 | Pearson      | b2        |
+| BK3     | Data structure       |         3 | Taylor       | b3        |
+| BK4     | AI                   |         4 | MC GREW HILL | b3        |
+| BK5     | Thermo Dynamics      |         5 | MC GREW HILL | b4        |
++---------+----------------------+-----------+--------------+-----------+
+
+
+insert into borrow values("4VP21ci010 ","BK5","2022-03-12");
+insert into borrow values("4VP21MB010 ","BK4","2022-04-11");
+insert into borrow values("4VP21MC003 ","BK1","2021-04-10");
+insert into borrow values("4VP21ME000 ","BK2","2021-05-09");
+insert into borrow values("4VP21ME010 ","BK3","2020-06-09");
+
+mysql> select * from borrow;
++------------+---------+-------------+
+| Usn        | Book_id | Borrow_date |
++------------+---------+-------------+
+| 4VP21ci010 | BK5     | 2022-03-12  |
+| 4VP21MB010 | BK4     | 2022-04-11  |
+| 4VP21MC003 | BK1     | 2021-04-10  |
+| 4VP21ME000 | BK2     | 2021-05-09  |
+| 4VP21ME010 | BK3     | 2020-06-09  |
++------------+---------+-------------+
+
