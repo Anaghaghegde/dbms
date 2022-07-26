@@ -1,0 +1,175 @@
+create table Student(USN varchar(10) primary key,
+     Name char(20),
+    date_of_birth date,
+    branch char(10),
+    mark1 float(5,2),
+    mark2 float(5,2),
+    mark3 float(5,2), 
+    total float(5,2),
+    GPA float(5,2));   
+    
+    mysql> desc Student;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| USN           | varchar(10) | NO   | PRI | NULL    |       |
+| Name          | char(20)    | YES  |     | NULL    |       |
+| date_of_birth | date        | YES  |     | NULL    |       |
+| branch        | char(10)    | YES  |     | NULL    |       |
+| mark1         | float(5,2)  | YES  |     | NULL    |       |
+| mark2         | float(5,2)  | YES  |     | NULL    |       |
+| mark3         | float(5,2)  | YES  |     | NULL    |       |
+| total         | float(5,2)  | YES  |     | NULL    |       |
+| GPA           | float(5,2)  | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+insert into Student (USN,Name,date_of_birth,branch,mark1,mark2,mark3)
+values('4VP21MC010','Deepthi','2000-10-12','MCA','88','87','75');
+
+insert into Student (USN,Name,date_of_birth,branch,mark1,mark2,mark3)
+values('4VP21MC003','Anagha','2000-06-16','MCA','85','77','80');
+
+insert into Student (USN,Name,date_of_birth,branch,mark1,mark2,mark3)
+values('4VP21MC005','Dhanya','2000-08-11','MCA','95','87','80');
+
+insert into Student (USN,Name,date_of_birth,branch,mark1,mark2,mark3)
+values('4VP21MB002','Kavya','2001-07-11','MBA','67','87','90');
+
+insert into Student (USN,Name,date_of_birth,branch,mark1,mark2,mark3)
+values('4VP21MB045','Gouri','2000-03-10','MBA','97','57','50');
+
+insert into Student (USN,Name,date_of_birth,branch,mark1,mark2,mark3)
+values('4VP21MB032','Abhi','2000-08-13','MBA','67','72','80');
+
+insert into Student (USN,Name,date_of_birth,branch,mark1,mark2,mark3)
+values('4VP21CS012','Amruta','2000-05-01','CS','87','92','50');
+
+insert into Student (USN,Name,date_of_birth,branch,mark1,mark2,mark3)
+values('4VP21CS015','Anusha','2000-03-03','CS','47','62','50');
+
+mysql> select * from Student;
++------------+---------+---------------+--------+-------+-------+-------+-------+------+
+| USN        | Name    | date_of_birth | branch | mark1 | mark2 | mark3 | total | GPA  |
++------------+---------+---------------+--------+-------+-------+-------+-------+------+
+| 4VP21CS012 | Amruta  | 2000-05-01    | CS     | 87.00 | 92.00 | 50.00 |  NULL | NULL |
+| 4VP21CS015 | Anusha  | 2000-03-03    | CS     | 47.00 | 62.00 | 50.00 |  NULL | NULL |
+| 4VP21MB002 | Kavya   | 2001-07-11    | MBA    | 67.00 | 87.00 | 90.00 |  NULL | NULL |
+| 4VP21MB032 | Abhi    | 2000-08-13    | MBA    | 67.00 | 72.00 | 80.00 |  NULL | NULL |
+| 4VP21MB045 | Gouri   | 2000-03-10    | MBA    | 97.00 | 57.00 | 50.00 |  NULL | NULL |
+| 4VP21MC003 | Anagha  | 2000-06-16    | MCA    | 85.00 | 77.00 | 80.00 |  NULL | NULL |
+| 4VP21MC005 | Dhanya  | 2000-08-11    | MCA    | 95.00 | 87.00 | 80.00 |  NULL | NULL |
+| 4VP21MC010 | Deepthi | 2000-10-12    | MCA    | 88.00 | 87.00 | 75.00 |  NULL | NULL |
++------------+---------+---------------+--------+-------+-------+-------+-------+------+
+
+1.update Student set total=mark1+mark2+mark3 ;
+
+mysql> select * from Student;
++------------+---------+---------------+--------+-------+-------+-------+--------+------+
+| USN        | Name    | date_of_birth | branch | mark1 | mark2 | mark3 | total  | GPA  |
++------------+---------+---------------+--------+-------+-------+-------+--------+------+
+| 4VP21CS012 | Amruta  | 2000-05-01    | CS     | 87.00 | 92.00 | 50.00 | 229.00 | NULL |
+| 4VP21CS015 | Anusha  | 2000-03-03    | CS     | 47.00 | 62.00 | 50.00 | 159.00 | NULL |
+| 4VP21MB002 | Kavya   | 2001-07-11    | MBA    | 67.00 | 87.00 | 90.00 | 244.00 | NULL |
+| 4VP21MB032 | Abhi    | 2000-08-13    | MBA    | 67.00 | 72.00 | 80.00 | 219.00 | NULL |
+| 4VP21MB045 | Gouri   | 2000-03-10    | MBA    | 97.00 | 57.00 | 50.00 | 204.00 | NULL |
+| 4VP21MC003 | Anagha  | 2000-06-16    | MCA    | 85.00 | 77.00 | 80.00 | 242.00 | NULL |
+| 4VP21MC005 | Dhanya  | 2000-08-11    | MCA    | 95.00 | 87.00 | 80.00 | 262.00 | NULL |
+| 4VP21MC010 | Deepthi | 2000-10-12    | MCA    | 88.00 | 87.00 | 75.00 | 250.00 | NULL |
++------------+---------+---------------+--------+-------+-------+-------+--------+------+
+
+2.update Student set GPA=(total/3);
+
+mysql> select * from Student;
++------------+---------+---------------+--------+-------+-------+-------+--------+-------+
+| USN        | Name    | date_of_birth | branch | mark1 | mark2 | mark3 | total  | GPA   |
++------------+---------+---------------+--------+-------+-------+-------+--------+-------+
+| 4VP21CS012 | Amruta  | 2000-05-01    | CS     | 87.00 | 92.00 | 50.00 | 229.00 | 76.33 |
+| 4VP21CS015 | Anusha  | 2000-03-03    | CS     | 47.00 | 62.00 | 50.00 | 159.00 | 53.00 |
+| 4VP21MB002 | Kavya   | 2001-07-11    | MBA    | 67.00 | 87.00 | 90.00 | 244.00 | 81.33 |
+| 4VP21MB032 | Abhi    | 2000-08-13    | MBA    | 67.00 | 72.00 | 80.00 | 219.00 | 73.00 |
+| 4VP21MB045 | Gouri   | 2000-03-10    | MBA    | 97.00 | 57.00 | 50.00 | 204.00 | 68.00 |
+| 4VP21MC003 | Anagha  | 2000-06-16    | MCA    | 85.00 | 77.00 | 80.00 | 242.00 | 80.67 |
+| 4VP21MC005 | Dhanya  | 2000-08-11    | MCA    | 95.00 | 87.00 | 80.00 | 262.00 | 87.33 |
+| 4VP21MC010 | Deepthi | 2000-10-12    | MCA    | 88.00 | 87.00 | 75.00 | 250.00 | 83.33 |
++------------+---------+---------------+--------+-------+-------+-------+--------+-------+
+
+3.select USN,branch,date_of_birth
+from Student 
+where date_of_birth between '2000-03-01' and '2000-08-01';
+
++------------+--------+---------------+
+| USN        | branch | date_of_birth |
++------------+--------+---------------+
+| 4VP21CS012 | CS     | 2000-05-01    |
+| 4VP21CS015 | CS     | 2000-03-03    |
+| 4VP21MB045 | MBA    | 2000-03-10    |
+| 4VP21MC003 | MCA    | 2000-06-16    |
++------------+--------+---------------+
+
+
+4.select * from Student
+ where branch='MCA';
++------------+---------+---------------+--------+-------+-------+-------+--------+-------+
+| USN        | Name    | date_of_birth | branch | mark1 | mark2 | mark3 | total  | GPA   |
++------------+---------+---------------+--------+-------+-------+-------+--------+-------+
+| 4VP21MC003 | Anagha  | 2000-06-16    | MCA    | 85.00 | 77.00 | 80.00 | 242.00 | 80.67 |
+| 4VP21MC005 | Dhanya  | 2000-08-11    | MCA    | 95.00 | 87.00 | 80.00 | 262.00 | 87.33 |
+| 4VP21MC010 | Deepthi | 2000-10-12    | MCA    | 88.00 | 87.00 | 75.00 | 250.00 | 83.33 |
++------------+---------+---------------+--------+-------+-------+-------+--------+-------+
+
+
+
+5.Select branch ,max(GPA) Maximum
+from Student group by branch;
+
++--------+---------+
+| branch | Maximum |
++--------+---------+
+| CS     |   76.33 |
+| MBA    |   81.33 |
+| MCA    |   87.33 |
++--------+---------+
+
+
+select Name from Student 
+where Name like 'A%';
+
++--------+
+| Name   |
++--------+
+| Amruta |
+| Anusha |
+| Abhi   |
+| Anagha |
++--------+
+
+
+
+select Name from Student 
+where Name like '%ha';
+
+--------+
+| Name   |
++--------+
+| Anusha |
+| Anagha |
++--------+
+
+
+delete from Student where USN='4VP21MB032';
+
+select * from Student;
++------------+---------+---------------+--------+-------+-------+-------+--------+-------+
+| USN        | Name    | date_of_birth | branch | mark1 | mark2 | mark3 | total  | GPA   |
++------------+---------+---------------+--------+-------+-------+-------+--------+-------+
+| 4VP21CS012 | Amruta  | 2000-05-01    | CS     | 87.00 | 92.00 | 50.00 | 229.00 | 76.33 |
+| 4VP21CS015 | Anusha  | 2000-03-03    | CS     | 47.00 | 62.00 | 50.00 | 159.00 | 53.00 |
+| 4VP21MB002 | Kavya   | 2001-07-11    | MBA    | 67.00 | 87.00 | 90.00 | 244.00 | 81.33 |
+| 4VP21MB045 | Gouri   | 2000-03-10    | MBA    | 97.00 | 57.00 | 50.00 | 204.00 | 68.00 |
+| 4VP21MC003 | Anagha  | 2000-06-16    | MCA    | 85.00 | 77.00 | 80.00 | 242.00 | 80.67 |
+| 4VP21MC005 | Dhanya  | 2000-08-11    | MCA    | 95.00 | 87.00 | 80.00 | 262.00 | 87.33 |
+| 4VP21MC010 | Deepthi | 2000-10-12    | MCA    | 88.00 | 87.00 | 75.00 | 250.00 | 83.33 |
++------------+---------+---------------+--------+-------+-------+-------+--------+-------+
+
+
