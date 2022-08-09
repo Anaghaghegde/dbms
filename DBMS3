@@ -1,0 +1,186 @@
+create table team(Tid varchar(10) primary key not null,
+     Tname varchar(30) not null,
+     Coatch varchar(40) not null,
+     City varchar(30) not null);
+    
+    +--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| Tid    | varchar(10) | NO   | PRI | NULL    |       |
+| Tname  | varchar(30) | NO   |     | NULL    |       |
+| Coatch | varchar(40) | NO   |     | NULL    |       |
+| City   | varchar(30) | NO   |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+ 
+  alter table team add Captian_id char(20);
+  alter table team add foreign key(Captian_id) references player(PID);
+  
+    mysql> desc team;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| Tid        | varchar(10) | NO   | PRI | NULL    |       |
+| Tname      | varchar(30) | NO   |     | NULL    |       |
+| Coatch     | varchar(40) | NO   |     | NULL    |       |
+| City       | varchar(30) | NO   |     | NULL    |       |
+| Captian_id | char(20)    | YES  | MUL | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+     
+create table player(Pid varchar(10) primary key not null,
+    Pname varchar(30) not null,
+    Age int(2) not null,
+    P_no char(20),
+   Tid varchar(10),foreign key(Tid)references team(Tid));
+   
+ 
+
+   +-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| Pid   | varchar(10) | NO   | PRI | NULL    |       |
+| Pname | varchar(30) | NO   |     | NULL    |       |
+| Age   | int         | NO   |     | NULL    |       |
+| P_no  | char(20)    | YES  |     | NULL    |       |
+| Tid   | varchar(10) | YES  | MUL | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+
+   
+create table stadium(Sid varchar(10) primary key not null,
+    Sname varchar(30) not null,
+     Pincode int(6) not null,
+    City varchar(20) not null,
+    Area varchar(20) not null);
+    +---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Sid     | varchar(10) | NO   | PRI | NULL    |       |
+| Sname   | varchar(30) | NO   |     | NULL    |       |
+| Pincode | int         | NO   |     | NULL    |       |
+| City    | varchar(20) | NO   |     | NULL    |       |
+| Area    | varchar(20) | NO   |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+
+
+create table match1(Mid char(10) primary key not null,
+Winner_id char(20),
+ Mdate date,
+ Time time,Sid varchar(10),
+ Team1_id varchar(10) not null,
+ Team2_id varchar(10) not null,
+foreign key(Sid) references stadium(Sid),
+foreign key(Team1_id) references team(Tid),
+foreign key(Team2_id) references team(Tid),
+foreign key(Winner_id) references team(Tid));
+
+ mysql> desc match1;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Mid       | char(10)    | NO   | PRI | NULL    |       |
+| Winner_id | char(20)    | YES  | MUL | NULL    |       |
+| Mdate     | date        | YES  |     | NULL    |       |
+| Time      | time        | YES  |     | NULL    |       |
+| Sid       | varchar(10) | YES  | MUL | NULL    |       |
+| Team1_id  | varchar(10) | NO   | MUL | NULL    |       |
+| Team2_id  | varchar(10) | NO   | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+
+ 
+create table manofthematch(Pid varchar(10),
+Mid char(10),primary key(Pid,Mid),
+foreign key(Pid)references player(Pid),
+ foreign key(Mid)references match1(Mid));
+
+
+mysql> desc manofthematch;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| Pid   | varchar(10) | NO   | PRI | NULL    |       |
+| Mid   | char(10)    | NO   | PRI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+
+
+
+insert into player(Pid,Pname,Age,P_no) values('07','Dhoni','44','8277050632');
+insert into player(Pid,Pname,Age,P_no) values('09','Sachin','50','8277050632');
+insert into player(Pid,Pname,Age,P_no) values('10','Virat','34','8277050632');
+insert into player(Pid,Pname,Age,P_no) values('02','Chahal','30','8277050632');
+insert into player(Pid,Pname,Age,P_no) values('04','Dhavan','32','9449446652');
+insert into player(Pid,Pname,Age,P_no) values('13','Raina','43','8123456789');
+
+
+select * from team;
++-----+-------+---------+----------+------------+
+| Tid | Tname | Coatch  | City     | Captian_id |
++-----+-------+---------+----------+------------+
+| T01 | CSK   | Ganesh  | Mumbai   | 07         |
+| T02 | RCB   | Gambhir | Bnglore  | 09         |
+| T03 | MI    | Uttappa | Mumbai   | 10         |
+| T04 | KKR   | Pk      | Kolkatta | 02         |
+| T05 | KXIP  | Javed   | Panjab   | 04         |
+| T06 | GT    | Jadeja  | Gujarath | 13         |
++-----+-------+---------+----------+------------+
+
+
+insert into team(Tid,Tname,Coatch,City,Captian_id) values('T01','CSK','Ganesh','Mumbai','07');
+insert into team(Tid,Tname,Coatch,City,Captian_id) values('T02','RCB','Gambhir','Bnglore','09');
+insert into team(Tid,Tname,Coatch,City,Captian_id) values('T03','MI','Uttappa','Mumbai','10');
+insert into team(Tid,Tname,Coatch,City,Captian_id) values('T04','KKR','Pk','Kolkatta','02');
+insert into team(Tid,Tname,Coatch,City,Captian_id) values('T05','KXIP','Javed','Panjab','04');
+insert into team(Tid,Tname,Coatch,City,Captian_id) values('T06','GT','Jadeja','Gujarath','13');
+
+mysql> select * from team;
++-----+-------+---------+----------+------------+
+| Tid | Tname | Coatch  | City     | Captian_id |
++-----+-------+---------+----------+------------+
+| T01 | CSK   | Ganesh  | Mumbai   | 07         |
+| T02 | RCB   | Gambhir | Bnglore  | 09         |
+| T03 | MI    | Uttappa | Mumbai   | 10         |
+| T04 | KKR   | Pk      | Kolkatta | 02         |
+| T05 | KXIP  | Javed   | Panjab   | 04         |
+| T06 | GT    | Jadeja  | Gujarath | 13         |
++-----+-------+---------+----------+------------+
+
+
+insert into stadium values('s1','Kantiveera','581327','Bnglore','maleshwaram');
+insert into stadium values('s2','RNshetty','581647','Dharwad','begur');
+insert into stadium values('s3','Bendre','541727','Hubli','Agadi');
+insert into stadium values('s4','Neharu','5897427','Shivmogga','Bhadravati');
+insert into stadium values('s5','KSCA','545327','Belagavi','Athani');
+
+mysql> select * from stadium;
++-----+------------+---------+-----------+-------------+
+| Sid | Sname      | Pincode | City      | Area        |
++-----+------------+---------+-----------+-------------+
+| s1  | Kantiveera |  581327 | Bnglore   | maleshwaram |
+| s2  | RNshetty   |  581647 | Dharwad   | begur       |
+| s3  | Bendre     |  541727 | Hubli     | Agadi       |
+| s4  | Neharu     | 5897427 | Shivmogga | Bhadravati  |
+| s5  | KSCA       |  545327 | Belagavi  | Athani      |
++-----+------------+---------+-----------+-------------+
+
+
+insert into match1 values('m01','T01','2003-05-08','5.30','s2','T01','T03');
+insert into match1 values('m02','T03','2020-05-16','3.30','s1','T04','T03');
+insert into match1 values('m03','T05','2013-04-08','6.50','s5','T05','T01');
+insert into match1 values('m04','T06','2013-06-06','2.50','s3','T06','T03');
+insert into match1 values('m05','T04','2011-04-26','8.50','s4','T04','T03');
+
+mysql> select * from match1;
++-----+-----------+------------+----------+------+----------+----------+
+| Mid | Winner_id | Mdate      | Time     | Sid  | Team1_id | Team2_id |
++-----+-----------+------------+----------+------+----------+----------+
+| m01 | T01       | 2003-05-08 | 00:00:05 | s2   | T01      | T03      |
+| m02 | T03       | 2020-05-16 | 00:00:03 | s1   | T04      | T03      |
+| m03 | T05       | 2013-04-08 | 00:00:07 | s5   | T05      | T01      |
+| m04 | T06       | 2013-06-06 | 00:00:03 | s3   | T06      | T03      |
+| m05 | T04       | 2011-04-26 | 00:00:09 | s4   | T04      | T03      |
++-----+-----------+------------+----------+------+----------+----------+
+
+
+select Pid,Pname,age from player
+group by Tid and order by Age asc;
+
+
+ 
