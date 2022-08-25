@@ -1,0 +1,179 @@
+create table tourist_place
+(tpid int(10) primary key,
+history varchar(20),
+kilometers int(3),
+state varchar(20),
+tpname varchar(20));
+
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| tpid       | int         | NO   | PRI | NULL    |       |
+| history    | varchar(20) | YES  |     | NULL    |       |
+| kilometers | int         | YES  |     | NULL    |       |
+| state      | varchar(20) | YES  |     | NULL    |       |
+| tpname     | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+
+insert into tourist_place values(11,'beauty',160,'karnataka','ooty');
+insert into tourist_place values(12,'heven',280,'karnataka','honnavar');
+insert into tourist_place values(13,'pearlcity',160,'tamilnadu','puttur');
+insert into tourist_place values(14,'falls',320,'goa','doodhsagar');
+insert into tourist_place values(15,'mandir',760,'uttar pradesh','Ram mandir');
+
++------+-----------+------------+---------------+------------+
+| tpid | history   | kilometers | state         | tpname     |
++------+-----------+------------+---------------+------------+
+|   11 | beauty    |        160 | karnataka     | ooty       |
+|   12 | heven     |        280 | karnataka     | honnavar   |
+|   13 | pearlcity |        160 | tamilnadu     | puttur     |
+|   14 | falls     |        320 | goa           | doodhsagar |
+|   15 | mandir    |        760 | uttar pradesh | Ram mandir |
++------+-----------+------------+---------------+------------+
+
+
+create table tourist(
+tid char(10) primary key,
+country varchar(20),
+age int(10),
+tname varchar(30));
+
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| tid     | char(10)    | NO   | PRI | NULL    |       |
+| country | varchar(20) | YES  |     | NULL    |       |
+| age     | int         | YES  |     | NULL    |       |
+| tname   | varchar(30) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+
+insert into tourist values(22,'india',22,'deepthi');
+insert into tourist values(23,'india',22,'Anagha');
+insert into tourist values(24,'india',23,'Amruta');
+insert into tourist values(25,'US',42,'anusha');
+insert into tourist values(26,'london',30,'vibha');
+
++-----+---------+------+---------+
+| tid | country | age  | tname   |
++-----+---------+------+---------+
+| 22  | india   |   22 | deepthi |
+| 23  | india   |   22 | Anagha  |
+| 24  | india   |   23 | Amruta  |
+| 25  | US      |   42 | anusha  |
+| 26  | london  |   30 | vibha   |
++-----+---------+------+---------+
+
+
+create table visit(
+tpid int(3) references tourist_place(tpid),
+tid int references tourist(id),
+vdate date,
+primary key(tpid,tid));
+
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| tpid  | int  | NO   | PRI | NULL    |       |
+| tid   | int  | NO   | PRI | NULL    |       |
+| vdate | date | YES  |     | NULL    |       |
++-------+------+------+-----+---------+-------+
+insert into visit values(12,23,'2022-06-16');
+insert into visit values(12,22,'2012-08-22');
+insert into visit values(13,22,'2012-08-22');
+insert into visit values(14,24,'2022-05-11');
+insert into visit values(15,26,'2022-06-10');
+insert into visit values(14,23,'2017-06-30');
+insert into visit values(15,24,'2012-07-31');
+insert into visit values(11,22,'2018-01-28');
+
+
++------+-----+------------+
+| tpid | tid | vdate      |
++------+-----+------------+
+|   11 |  22 | 2018-01-28 |
+|   12 |  22 | 2012-08-22 |
+|   12 |  23 | 2022-06-16 |
+|   13 |  22 | 2012-08-22 |
+|   14 |  23 | 2017-06-30 |
+|   14 |  24 | 2022-05-11 |
+|   15 |  24 | 2012-07-31 |
+|   15 |  26 | 2022-06-10 |
++------+-----+------------+
+
+
+create table email(
+tid int(10) references tourist(tid),
+email varchar(20),
+primary key (tid,email));
+
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| tid   | int         | NO   | PRI | NULL    |       |
+| email | varchar(20) | NO   | PRI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+
+insert into email values(23,'anagha@gmail.com');
+insert into email values(22,'deepthi@gmail.com');
+insert into email values(24,'amruta@gmail.com');
+insert into email values(25,'anusha@gmail.com');
+insert into email values(26,'vibha@gmail.com');
+insert into email values(22,'ghegde@gmail.com');
+insert into email values(24,'hegde@gmail.com');
+
++-----+-------------------+
+| tid | email             |
++-----+-------------------+
+|  22 | deepthi@gmail.com |
+|  22 | ghegde@gmail.com  |
+|  23 | anagha@gmail.com  |
+|  24 | amruta@gmail.com  |
+|  24 | hegde@gmail.com   |
+|  25 | anusha@gmail.com  |
+|  26 | vibha@gmail.com   |
++-----+-------------------+
+
+i. List the state name which is having maximum number of tourist places.
+
+1. select state,count(tpid) 
+from tourist_place group by 
+state order by count(tpid)desc 
+limit 1;
+
+
++-----------+-------------+
+| state     | count(tpid) |
++-----------+-------------+
+| karnataka |           2 |
++-----------+-------------+
+
+ii. List details of Tourist place where maximum number of tourists visited.
+
+2.select tp.tpid,tp.tpname,tp.state,count(v.tid)
+from tourist_place tp,visit v where v.tpid=tp.tpid 
+group by v.tpid order by count(v.tpid)desc limit 1;
+
++------+------------+---------------+--------------+
+| tpid | tpname     | state         | count(v.tid) |
++------+------------+---------------+--------------+
+|   15 | Ram mandir | uttar pradesh |            2 |
++------+------------+---------------+--------------+
+
+iii. List the details of tourists visited all tourist places of the state “KARNATAKA”.
+
+3.select * from tourist where tid in
+(select tid from visit,tourist_place where
+visit.tpid=tourist_place.tpid and state='karnataka');
+
++-----+---------+------+---------+
+| tid | country | age  | tname   |
++-----+---------+------+---------+
+| 22  | india   |   22 | deepthi |
+| 23  | india   |   22 | Anagha  |
++-----+---------+------+---------+
+
+
+
+
+
+
