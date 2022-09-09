@@ -231,7 +231,7 @@ mysql> call abc('02','Dhanya',16,'puttur','karnataka');
 
 
 
-DELIMITER $$
+5.DELIMITER $$
 create trigger new1
 after insert on voter
 for each row
